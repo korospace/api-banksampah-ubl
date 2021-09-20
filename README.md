@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/korospace/t-gadgetapi">
-    <img src="assets/logo.png" alt="Logo" width="120">
+    <img src="assets/img/logo.png" alt="Logo" width="120">
   </a>
 
   <h1 align="center">Banksampah Budiluhur API</h1>
@@ -21,4 +21,4 @@
 
   | CONTROLLER | METHOD | Detail Usage |
   |    :--:    |  :---  |     :--:     |
-  | nasabah   | <ul><li>- register</li><li>- verification</li><li>- login</li><li>- sessioncheck</li><li>- getdata</li><li>- editprofile</li><li>- logout</li></ul> | <a href="/sub-readme/nasabah/README.md">detail</a>
+  | nasabah   | <ul><li>- register</li><li>- verification</li><li>- login</li><li>- sessioncheck</li><li>- getdata</li><li>- editprofile</li><li>- logout</li></ul> | <a href="/assets/docs/nasabah.md">detail</a>
