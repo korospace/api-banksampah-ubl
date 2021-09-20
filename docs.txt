@@ -1,0 +1,48 @@
+must be install
+- sudo apt-get install curl php-cli php-mbstring git unzip
+- sudo apt-get install php-curl
+- sudo apt-get install php-intl
+- sudo apt-get install php-xml
+- sudo apt-get install php-pgsql
+
+deploy
+- enable .env in .gitignore
+
+
+1. change environment
+
+    1- go to .env
+    2- go to line 18
+    3- change 'CI_ENVIRONMENT = production' 
+       to     'CI_ENVIRONMENT = development' 
+
+2. setup database
+
+    1- go to .env
+    2- go to line 41
+    3- go to app/Config/Database.php
+    4- go to line 33
+
+3- create table nasabah
+
+    1- php spark migrate:create nasabah
+    2- go to app/Database/Migrations
+    3- edit the file
+    4- php spark migrate
+
+4- create controller nasabah
+
+    1- php spark make:controller Nasabah
+
+5- create model nasabah
+
+    1- php spark make:model Nasabah
+
+6- install jwt
+
+    1- composer require firebase/php-jwt
+
+7- edit routes
+
+    1- go to app/Config/Routes.php
+    2- go to line 35
