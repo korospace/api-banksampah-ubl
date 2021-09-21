@@ -208,4 +208,14 @@ class Validation
             ],
 		]
 	];
+
+	public $editNewPassword = [
+		'new_password' => [
+            'rules'  => 'min_length[8]|max_length[20]',
+            'errors' => [
+                'min_length'  => 'min 8 character',
+                'max_length'  => 'max 20 character',
+            ],
+		],
+	];
 }

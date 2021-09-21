@@ -324,7 +324,13 @@ class Nasabah extends ResourceController
             $errors = $this->validation->getErrors();
 
             if($errors) {
-                return $this->fail($errors,400,true);
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors,
+                ];
+        
+                return $this->respond($response,400);
             } 
             else {
                 $id           = $data['id'];
@@ -332,6 +338,28 @@ class Nasabah extends ResourceController
                 $dataNasabah  = $nasabahModel->where("id",$id)->first();
 
                 if (!empty($dataNasabah)) {
+                    $newpass = '';
+                    $oldpass = '';
+
+                    try {
+                        $newpass = $data['new_password'];
+                        $oldpass = $data['old_password'];
+
+                        $this->validation->run($data,'editNewPassword');
+                        $errors = $this->validation->getErrors();
+                        
+                        if($errors) {
+                            $response = [
+                                'status'   => 400,
+                                'error'    => true,
+                                'messages' => $errors,
+                            ];
+                    
+                            return $this->respond($response,400);
+                        } 
+                    } 
+                    catch (Exception $e) {}
+            
                     $data = [
                         "id"           => $data['id'],
                         "username"     => $data['username'],
@@ -342,19 +370,16 @@ class Nasabah extends ResourceController
                         "kelamin"      => $data['kelamin'],
                     ];
 
-                    // $newpass = $this->request->getPost('new_password');
-                    // $oldpass = $this->request->getPost('old_password');
-
-                    // var_dump($newpass != '');die;
-
-                    // if ($newpass != '') {
-                    //     if (password_verify($oldpass,$dataNasabah['password'])) {
-                    //         $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
-                    //     } 
-                    //     else {
-                    //         return $this->fail("wrong old password",401,true);
-                    //     }
-                    // }
+                    if ($newpass != '') {
+                        if (password_verify($oldpass,$dataNasabah['password'])) {
+                            $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                            unset($data['new_password']);
+                            unset($data['old_password']);
+                        } 
+                        else {
+                            return $this->fail("wrong old password",401,true);
+                        }
+                    }
 
                     $editNasabah  = $nasabahModel->editProfileNasabah($data);
 
