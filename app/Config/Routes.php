@@ -37,9 +37,9 @@ $routes->group("nasabah", function ($routes) {
     $routes->post("login",        "Nasabah::login");
     $routes->post("verification", "Nasabah::verification");
     $routes->get("sessioncheck",  "Nasabah::sessionCheck");
-    $routes->get("logout",        "Nasabah::logout");
-    $routes->get("getdata",       "Nasabah::getData");
-    $routes->get("editprofile",   "Nasabah::editProfile");
+    $routes->get("getprofile",    "Nasabah::getProfile");
+    $routes->put("editprofile",   "Nasabah::editProfile");
+    $routes->delete("logout",     "Nasabah::logout");
     $routes->add("(:any)",        "Notfound::MethodNf");
 });
 

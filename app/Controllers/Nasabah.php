@@ -24,8 +24,15 @@ class Nasabah extends ResourceController
         $errors = $this->validation->getErrors();
 
         if($errors) {
-            return $this->fail($errors,400,true);
-        } else {
+            $response = [
+                'status' => 400,
+                'error' => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
             $email        = $data['email'];
             $otp          = $this->baseController->generateOTP(6);
 
@@ -33,14 +40,25 @@ class Nasabah extends ResourceController
             $lastNasabah  = $nasabahModel->getLastNasabah();
             $idNasabah    = '';
 
-            if (count($lastNasabah) != 0) {
-                $lastID = $lastNasabah[0]['id_nasabah'];
+            if ($lastNasabah['success'] == true) {
+                $lastID = $lastNasabah['message']['id_nasabah'];
                 $lastID = (int)substr($lastID,4)+1;
                 $lastID = sprintf('%05d',$lastID);
 
                 $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").$lastID;
-            } else {
+            }
+            else if ($lastNasabah['code'] == 404) {
                 $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'00001';
+            } 
+            else {
+                $response = [
+                    'status'   => $lastNasabah['code'],
+                    'error'    => true,
+                    'messages' => $lastNasabah['message'],
+                ];
+        
+                return $this->respond($response,$lastNasabah['code']);
+
             }
             
             $data = [
@@ -57,7 +75,9 @@ class Nasabah extends ResourceController
                 "otp"          => $otp,
             ];
 
-            if ($nasabahModel->addNasabah($data)) {
+            $addNasabah = $nasabahModel->addNasabah($data);
+
+            if ($addNasabah['success'] == true) {
                 $sendEmail = $this->baseController->sendVerification($email,$otp);
 
                 if ($sendEmail == true) {
@@ -67,15 +87,27 @@ class Nasabah extends ResourceController
                         'messages' => 'register success. please check your email',
                     ];
     
-                    return $this->respondCreated($response);
+                    return $this->respond($response,201);
                 } 
                 else {
-                    return $this->fail($sendEmail,500,true);
+                    $response = [
+                        'status'   => 500,
+                        'error'    => true,
+                        'messages' => $sendEmail,
+                    ];
+            
+                    return $this->respond($response,500);
                 }
                 
             } 
             else {
-                return $this->failServerError();
+                $response = [
+                    'status'   => $addNasabah['code'],
+                    'error'    => true,
+                    'messages' => $addNasabah['message'],
+                ];
+        
+                return $this->respond($response,$addNasabah['code']);
             }
         }
 
@@ -88,28 +120,37 @@ class Nasabah extends ResourceController
         $errors = $this->validation->getErrors();
 
         if($errors) {
-            return $this->fail($errors,400,true);
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors['code_otp'],
+            ];
+    
+            return $this->respond($response,400);
         } 
         else {
             $nasabahModel = new NasabahModel();
             $email        = $this->request->getPost('code_otp');
             $editNasabah  = $nasabahModel->emailVerification($email);
 
-            if (is_int($editNasabah)) {
-                if ($editNasabah > 0) {
-                    $response = [
-                        'status'   => 201,
-                        "error"    => false,
-                        'messages' => 'verification success',
-                    ];
-    
-                    return $this->respondCreated($response);
-                } else {
-                    return $this->fail('otp not found',404,true);
-                }                
+            if ($editNasabah['success'] == true) {
+                $response = [
+                    'status'   => 201,
+                    'error'    => false,
+                    'messages' => $editNasabah['message'],
+                ];
+        
+                return $this->respond($response,201);
+
             } 
             else {
-                return $this->fail($editNasabah,500,true);
+                $response = [
+                    'status'   => $editNasabah['code'],
+                    'error'    => true,
+                    'messages' => $editNasabah['message'],
+                ];
+        
+                return $this->respond($response,$editNasabah['code']);
             }
         }    
     }
@@ -121,58 +162,88 @@ class Nasabah extends ResourceController
         $errors = $this->validation->getErrors();
 
         if($errors) {
-            return $this->fail($errors,400,true);
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
         } 
         else {
             $nasabahModel = new NasabahModel();
-            $nasabahdata  = $nasabahModel->where("email", $this->request->getPost("email"))->first();
+            $nasabahData  = $nasabahModel->getNasabahByEmail($this->request->getPost("email"));
 
-            if (!empty($nasabahdata)) {
-                if (password_verify($this->request->getPost("password"), $nasabahdata['password'])) {
+            if ($nasabahData['success'] == true) {
+                $login_pass    = $this->request->getPost("password");
+                $database_pass = $nasabahData['message']['password'];
 
-                    if ($nasabahdata['is_verify'] == 'no') {
-                        return $this->fail('account is not verify',403,true);
+                if (password_verify($login_pass,$database_pass)) {
+                    $is_verify = $nasabahData['message']['is_verify'];
+
+                    if ($is_verify == 'no') {
+                        $response = [
+                            'status'   => 401,
+                            'error'    => true,
+                            'messages' => 'account is not verify',
+                        ];
+                
+                        return $this->respond($response,401);
                     } 
                     else {
+                        // database row id
+                        $id           = $nasabahData['message']['id'];
                         // rememberMe check
                         $rememberme   = ($this->request->getPost("rememberme") == 'yes') ? true : '';
                         // generate new token
                         $token        = $this->baseController->generateToken(
-                            $nasabahdata['id'],
-                            $nasabahdata['id_nasabah'],
+                            $id,
+                            $nasabahData['message']['id_nasabah'],
                             $rememberme
                         );
-                        // edit nasabah in database
-                        $editNasabah = $nasabahModel->updateToken($nasabahdata['id'],$token);
 
-                        if (is_int($editNasabah)) {
-                            if ($editNasabah > 0) {
-                                $response = [
-                                    'status' => 200,
-                                    'error' => false,
-                                    'messages' => 'loggin success',
-                                    'data' => [
-                                        'token' => $token
-                                    ]
-                                ];
-        
-                                return $this->respond($response,200);
-                            } 
-                            else {
-                                return $this->fail('user id not found',404,true);
-                            }                
+                        // edit nasabah in database
+                        $editNasabah = $nasabahModel->updateToken($id,$token);
+
+                        if ($editNasabah['success'] == true) {
+                            $response = [
+                                'status'   => 200,
+                                'error'    => false,
+                                'messages' => 'loggin success',
+                                'token   ' => $token
+                            ];
+    
+                            return $this->respond($response,200);
                         } 
                         else {
-                            return $this->fail($editNasabah,500,true);
+                            $response = [
+                                'status'   => $nasabahData['code'],
+                                'error'    => true,
+                                'messages' => $nasabahData['message'],
+                            ];
+                    
+                            return $this->respond($response,$nasabahData['code']);
                         }
                     } 
                 } 
                 else {
-                    return $this->fail('wrong password',401,true);
+                    $response = [
+                        'status'   => 404,
+                        'error'    => true,
+                        'messages' => 'password not match',
+                    ];
+            
+                    return $this->respond($response,404);
                 }
             } 
             else {
-                return $this->fail('email not found',404,true);
+                $response = [
+                    'status'   => $nasabahData['code'],
+                    'error'    => true,
+                    'messages' => $nasabahData['message'],
+                ];
+        
+                return $this->respond($response,$nasabahData['code']);
             }
         }
     }
@@ -187,12 +258,17 @@ class Nasabah extends ResourceController
             return $this->respond($result['message'],200);
         } 
         else {
-            return $this->fail($result['message'],200,true);
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
         }
-        
     }
 
-    public function getData()
+    public function getProfile()
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
@@ -200,35 +276,36 @@ class Nasabah extends ResourceController
 
         if ($result['success'] == true) {
             $nasabahModel = new NasabahModel();
-            $id_nasabah   = $result['message']['data']['id_nasabah'];
-            $dataNasabah  = $nasabahModel->where("id_nasabah",$id_nasabah)->first();
-
-            if (!empty($dataNasabah)) {
+            $id           = $result['message']['data']['id'];
+            $dataNasabah  = $nasabahModel->getProfileNasabah($id);
+            
+            if ($dataNasabah['success'] == true) {
                 $response = [
                     'status' => 200,
                     'error'  => false,
-                    'data '  => [
-                        'id'          => $dataNasabah['id'],
-                        'id_nasabah'  => $dataNasabah['id_nasabah'],
-                        'email'       => $dataNasabah['email'],
-                        'username'    => $dataNasabah['username'],
-                        'nama_lengkap'=> $dataNasabah['nama_lengkap'],
-                        'alamat'      => $dataNasabah['alamat'],
-                        'notelp'      => $dataNasabah['notelp'],
-                        'kelamin'     => $dataNasabah['kelamin'],
-                        'tgl_lahir'   => $dataNasabah['tgl_lahir'],
-                        'created_at'  => $dataNasabah['created_at'],
-                    ],
+                    'data '  => $dataNasabah['message']
                 ];
 
                 return $this->respond($response,200);
             } 
             else {
-                return $this->fail('nasabah not found',404,true);
+                $response = [
+                    'status'   => $dataNasabah['code'],
+                    'error'    => true,
+                    'messages' => $dataNasabah['message'],
+                ];
+        
+                return $this->respond($response,$dataNasabah['code']);
             }
         } 
         else {
-            return $this->fail($result['message'],200,true);
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
         }
     }
 
@@ -239,7 +316,10 @@ class Nasabah extends ResourceController
         $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
-            $data   = $this->request->getPost();
+            $this->baseController->_methodParser('data');
+            global $data;
+            $data['id'] = $result['message']['data']['id']; 
+
             $this->validation->run($data,'editProfileNasabah');
             $errors = $this->validation->getErrors();
 
@@ -262,42 +342,39 @@ class Nasabah extends ResourceController
                         "kelamin"      => $data['kelamin'],
                     ];
 
-                    $newpass = $this->request->getPost('new_password');
-                    $oldpass = $this->request->getPost('old_password');
+                    // $newpass = $this->request->getPost('new_password');
+                    // $oldpass = $this->request->getPost('old_password');
 
-                    if ($newpass != '') {
-                        if (password_verify($oldpass,$dataNasabah['password'])) {
-                            $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
-                        } 
-                        else {
-                            return $this->fail("wrong old password",401,true);
-                        }
-                    }
+                    // var_dump($newpass != '');die;
+
+                    // if ($newpass != '') {
+                    //     if (password_verify($oldpass,$dataNasabah['password'])) {
+                    //         $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                    //     } 
+                    //     else {
+                    //         return $this->fail("wrong old password",401,true);
+                    //     }
+                    // }
 
                     $editNasabah  = $nasabahModel->editProfileNasabah($data);
 
-                    if (is_int($editNasabah)) {
-                        if ($editNasabah > 0) {
-                            $response = [
-                                'status' => 201,
-                                'error' => false,
-                                'messages' => 'edit profile success',
-                            ];
-        
-                            return $this->respond($response,201);
-                        }
-                        else {
-                            $response = [
-                                'status' => 201,
-                                'error' => false,
-                                'messages' => 'nothing update',
-                            ];
-        
-                            return $this->respond($response,201);
-                        }
+                    if ($editNasabah['success'] == true) {
+                        $response = [
+                            'status' => 201,
+                            'error' => false,
+                            'messages' => $editNasabah['message'],
+                        ];
+    
+                        return $this->respond($response,201);
                     } 
                     else {
-                        return $this->fail($editNasabah,500,true);
+                        $response = [
+                            'status'   => $editNasabah['code'],
+                            'error'    => true,
+                            'messages' => $editNasabah['message'],
+                        ];
+                
+                        return $this->respond($response,$editNasabah['code']);
                     }
                 } 
                 else {
@@ -307,7 +384,13 @@ class Nasabah extends ResourceController
             }
         } 
         else {
-            return $this->fail($result['message'],200,true);
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
         }
         
     }
@@ -320,26 +403,36 @@ class Nasabah extends ResourceController
 
         if ($result['success'] == true) {
             $nasabahModel = new NasabahModel();
-            $id_nasabah   = $result['message']['data']['id_nasabah'];
-            $editNasabah  = $nasabahModel->setTokenNull($id_nasabah);
+            $id           = $result['message']['data']['id'];
+            $editNasabah  = $nasabahModel->setTokenNull($id);
 
-            if (is_int($editNasabah)) {
-                if ($editNasabah > 0) {
-                    $response = [
-                        'status' => 200,
-                        'error' => false,
-                        'messages' => 'logout success',
-                    ];
+            if ($editNasabah['success'] == true) {
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => $editNasabah['message'],
+                ];
 
-                    return $this->respond($response,200);
-                }              
+                return $this->respond($response,200);
             } 
             else {
-                return $this->fail($editNasabah,500,true);
+                $response = [
+                    'status'   => $editNasabah['code'],
+                    'error'    => true,
+                    'messages' => $editNasabah['message'],
+                ];
+        
+                return $this->respond($response,$editNasabah['code']);
             }
         } 
         else {
-            return $this->fail($result['message'],200,true);
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
         }
         
     }

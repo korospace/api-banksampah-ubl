@@ -15,13 +15,59 @@ class NasabahModel extends Model
 	protected $createdField  = 'created_at';
 
     public function getLastNasabah(){
-        return $this->db->table($this->table)->orderBy('created_at','DESC')->limit(1)->get()->getResultArray();
+        try {
+            $lastNasabah = $this->db->table($this->table)->orderBy('created_at','DESC')->limit(1)->get()->getResultArray();
+
+            if (empty($lastNasabah)) {    
+                return [
+                    'success' => false,
+                    'message' => "last nasabah notfound",
+                    'code'    => 404
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'message' => $lastNasabah[0]
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
     }
 
     public function addNasabah($data){
-        $query = $this->db->table($this->table)->insert($data);
+        try {
+            $query = $this->db->table($this->table)->insert($data);
 
-        return $query ? true : false;
+            $query = $query ? true : false;
+            
+            if ($query == true) {
+                return [
+                    "success"  => true,
+                    'message' => 'register nasabah success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "register nasabah failed",
+                    'code'    => 500
+                ];
+            } 
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
     }
 
     public function emailVerification($otp){
@@ -31,11 +77,55 @@ class NasabahModel extends Model
                 'otp'       => null
             ];
     
-            $this->db->table('nasabah')->where('otp', $otp)->update($data);
-            return $this->db->affectedRows();
+            $this->db->table($this->table)->where('otp', $otp)->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => 'verification success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "code otp notfound",
+                    'code'    => 404
+                ];
+            }                
         } 
         catch (Exception $e) {
-            return $e->getMessage();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function getNasabahByEmail($email){
+        try {
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,password,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("email",$email)->get()->getResultArray();
+            
+            if (empty($dataNasabah)) {    
+                return [
+                    'success' => false,
+                    'message' => "email notfound",
+                    'code'    => 404
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'message' => $dataNasabah[0]
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
         }
     }
 
@@ -45,36 +135,112 @@ class NasabahModel extends Model
                 'token' => $token
             ];
     
-            $this->db->table('nasabah')->where('id', $id)->update($data);
-            return $this->db->affectedRows();
+            $this->db->table($this->table)->where('id', $id)->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => 'update new token is success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "update new token is failed",
+                    'code'    => 404
+                ];
+            }     
         } 
         catch (Exception $e) {
-            return $e->getMessage();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
         }
     }
 
-    public function setTokenNull(string $id_nasabah){
+    public function getProfileNasabah($id){
         try {
-            $data = [
-                'token' => null
-            ];
-    
-            $this->db->table('nasabah')->where('id_nasabah', $id_nasabah)->update($data);
-            return $this->db->affectedRows();
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getResultArray();
+            
+            if (empty($dataNasabah)) {    
+                return [
+                    'success' => false,
+                    'message' => "profile nasabah with id $id notfound",
+                    'code'    => 404
+                ];
+            } else {   
+                return [
+                    'success' => true,
+                    'message' => $dataNasabah[0]
+                ];
+            }
         } 
         catch (Exception $e) {
-            return $e->getMessage();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
         }
     }
 
     public function editProfileNasabah($data){
         try {
 
-            $this->db->table('nasabah')->where('id',$data['id'])->update($data);
-            return $this->db->affectedRows();
+            $this->db->table($this->table)->where('id',$data['id'])->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => 'edit profile success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'message' => "nothing updated",
+                ];
+            }  
         } 
         catch (Exception $e) {
-            return $e->getMessage();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function setTokenNull(string $id){
+        try {
+            $data = [
+                'token' => null
+            ];
+    
+            $this->db->table($this->table)->where('id', $id)->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => 'logout success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "user not found",
+                    'code'    => 404
+                ];
+            }     
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
         }
     }
 }
