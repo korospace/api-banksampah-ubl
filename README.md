@@ -10,6 +10,7 @@
 - [x] codeigniter4
 - [x] firebase/php-jwt
 - [x] phpmailer
+- [x] postgresql
 
 ## Endpoints <br>
 - url structure: <br>
