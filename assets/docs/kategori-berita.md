@@ -35,7 +35,7 @@
       {
         "status": 201,
         "error": false,
-        "messages": "register success. please check your email"
+        "messages": "add new kategori is success"
       }
       ```
 * **Error Response:**
@@ -46,8 +46,6 @@
             "status": 400,
             "error": true,
             "messages": {
-                "email": "max 30 character",
-                "username": "max 20 character",
                 ..
                 ..
                 ..
