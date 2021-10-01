@@ -1,4 +1,4 @@
-# NASABAH ENDPOINT
+# ADMIN ENDPOINT
 <a href="../../README.md"><strong>« back to menu</strong></a>
 
 <details open="open">

@@ -1,4 +1,4 @@
-# KATEGORI BERITA ENDPOINT
+# BERITA ACARA ENDPOINT
 <a href="../../README.md"><strong>« back to menu</strong></a>
 
 <details open="open">
@@ -6,14 +6,15 @@
   <ul>
     <li><a href="#1-add-item">add item</a></li>
     <li><a href="#2-get-item">get item</a></li>
-    <li><a href="#3-delete-item">delete item</a></li>
+    <li><a href="#3-edit-item">edit item</a></li>
+    <li><a href="#4-delete-item">delete item</a></li>
   </ul>
 </details>
 
 ## 1. add item
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/kategori_berita/additem
+    https://bsblbackend.herokuapp.com/berita_acara/additem
     ```
 * **Request method** <br>
 `POST`
@@ -24,9 +25,12 @@
     |token       | yes      | **only admin allowed*      |
 * **Params body** <br>
 
-    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH |
-    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |
-    |kategori_name| yes      | yes    |            | 20 char    |
+    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |              |
+    |title        | yes      | yes    |            | 100 char   |              |
+    |thumbnail    | yes      | -      |            | 200 kb     | png,jpg,webp |
+    |content      | yes      | -      |            | 10.000 char|              |
+    |kategori     | yes      | -      |            | 20 char    | **only in database are allowed*|
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -35,7 +39,7 @@
       {
         "status": 201,
         "error": false,
-        "messages": "add new kategori is success"
+        "messages": "add new berita is success"
       }
       ```
 * **Error Response:**
@@ -65,7 +69,14 @@
 ## 2. get item
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/kategori_berita/getitem
+    // All berita
+    https://bsblbackend.herokuapp.com/berita_acara/getitem
+    
+    // filter by kategori
+    https://bsblbackend.herokuapp.com/berita_acara/getitem?kategori=:kategori
+    
+    // filter by id
+    https://bsblbackend.herokuapp.com/berita_acara/getitem?id_berita=:id_berita
     ```
 * **Request method** <br>
 `GET`
@@ -103,7 +114,63 @@
         }
       ```
 
-## 3 delete item
+## 3. edit item
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/berita_acara/edititem
+    ```
+* **Request method** <br>
+`PUT`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only admin allowed*      |
+* **Params body** <br>
+
+    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |              |
+    |id           | yes      |        |            |            | number       |
+    |title        | yes      | yes    |            | 100 char   |              |
+    |thumbnail    | -        | -      |            | 200 kb     | png,jpg,webp |
+    |content      | yes      | -      |            | 10.000 char|              |
+    |kategori     | yes      | -      |            | 20 char    | **only in database are allowed*|
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+        "status": 201,
+        "error": false,
+        "messages": "edit berita is success"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad Request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+                ..
+                ..
+                ..
+            }
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 4 delete item
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/kategori_berita/deleteitem?id=:id
@@ -123,7 +190,7 @@
       {
             "status": 201,
             "error": false,
-            "messages": "delete kategori with id {id} is success",
+            "messages": "delete berita with id {id} is success",
       }
       ```
 * **Error Response:**
