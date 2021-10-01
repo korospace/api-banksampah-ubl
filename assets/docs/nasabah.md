@@ -25,16 +25,16 @@
 
     | PARAMETER  | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | example            |
     | :--:       |  :--:    |  :--:  |  :--:      |  :--:      |  :--:              |
-    |email       | yes      | yes    | 8 char     | 40 char    | xxxx@gmail.com     |
+    |email       | yes      | yes    |            | 40 char    | xxxx@gmail.com     |
     |username    | yes      | yes    | 8 char     | 20 char    |                    |
     |password    | yes      | -      | 8 char     | 20 char    |                    |
-    |nama_lengkap| yes      | yes    | 6 char     | 40 char    |                    |
-    |notelp      | yes      | yes    | 6 char     | 12 char    |0856xxxxxxxx        |
-    |alamat      | yes      | -      | 10 char    | 255 char   |                    |
+    |nama_lengkap| yes      | yes    |            | 40 char    |                    |
+    |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |alamat      | yes      | -      |            | 255 char   |                    |
     |rt          | yes      | -      | 2 char     | 2 char     |01                  |
     |rw          | yes      | -      | 2 char     | 2 char     |02                  |
-    |tgl_lahir   | yes      | -      | 11 char    | 16 char    |03-oktober-2000     |
-    |kelamin     | yes      | -      | 9 char     | 9 char     |laki-laki/perempuan |
+    |tgl_lahir   | yes      | -      |            | 10 char    |03-10-2000          |
+    |kelamin     | yes      | -      |            | 9 char     |laki-laki/perempuan |
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -133,10 +133,10 @@
 `POST`
 * **Params body** <br>
 
-    | PARAMETER  | REQUIRED | MIN_LENGTH |
-    | :--:       |  :--:    |  :--:      |
-    |email       | yes      | 8 char     |
-    |password    | yes      | 8 char     |
+    | PARAMETER  | REQUIRED |
+    | :--:       |  :--:    |
+    |email       | yes      |
+    |password    | yes      |
 
 * **Success response**
     * **code :** 200 Ok<br />
@@ -306,11 +306,11 @@
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | example            |
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:              |
     |username     | yes      | yes    | 8 char     | 20 char    |                    |
-    |nama_lengkap | yes      | yes    | 6 char     | 40 char    |                    |
-    |notelp       | yes      | yes    | 6 char     | 12 char    |0856xxxxxxxx        |
-    |alamat       | yes      | -      | 10 char    | 255 char   |                    |
-    |tgl_lahir    | yes      | -      | 11 char    | 16 char    |03-oktober-2000     |
-    |kelamin      | yes      | -      | 9 char     | 9 char     |laki-laki/perempuan |
+    |nama_lengkap | yes      | yes    |            | 40 char    |                    |
+    |notelp       | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |alamat       | yes      | -      |            | 255 char   |                    |
+    |tgl_lahir    | yes      | -      |            | 10 char    |03-10-2000          |
+    |kelamin      | yes      | -      |            | 9 char     |laki-laki/perempuan |
     |new_password | -        | -      | 8 char     | 20 char    |-                   |
     |old_password | -        | -      | -          | -          |-                   |
 
