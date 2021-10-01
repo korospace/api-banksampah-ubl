@@ -217,6 +217,18 @@
       }
       ```
 * **Error Response:**
+    * **status :** 400 Bad request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+              ...
+              ...
+            }
+        }
+      ```
     * **status :** 401 Unauthorized<br />
       **json :** 
       ```
@@ -283,10 +295,10 @@
 * **URL** <br>
     ```
     // All nasabah
-    https://bsblbackend.herokuapp.com/nasabah/getnasabah
+    https://bsblbackend.herokuapp.com/admin/getnasabah
     
     // Detail nasabah
-    https://bsblbackend.herokuapp.com/nasabah/getnasabah?id_nasabah=:id_nasabah
+    https://bsblbackend.herokuapp.com/admin/getnasabah?id_nasabah=:id_nasabah
     ```
 * **Request method** <br>
 `GET`
@@ -354,8 +366,8 @@
     |alamat      | yes      | -      |            | 255 char   |                    |
     |rt          | yes      | -      | 2 char     | 2 char     |01                  |
     |rw          | yes      | -      | 2 char     | 2 char     |02                  |
-    |tgl_lahir   | yes      | -      |            | 10 char    |03-10-2000          |
-    |kelamin     | yes      | -      |            | 9 char     |laki-laki/perempuan |
+    |tgl_lahir   | yes      | -      |            | 10 char    |dd-mm-yyyy          |
+    |kelamin     | yes      | -      |            |            |laki-laki/perempuan |
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -368,6 +380,18 @@
       }
       ```
 * **Error Response:**
+    * **status :** 400 Bad request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+              ...
+              ...
+            }
+        }
+      ```
     * **status :** 401 Unauthorized<br />
       **json :** 
       ```
@@ -411,7 +435,7 @@
     |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
     |alamat      | yes      | -      |            | 255 char   |                    |
     |tgl_lahir   | yes      | -      |            | 10 char    |dd-mm-yyyy          |
-    |kelamin     | yes      | -      |            | 9 char     |laki-laki/perempuan |
+    |kelamin     | yes      | -      |            |            |laki-laki/perempuan |
     |is_verify   | yes      | -      |            |            |'1'/'0'             |
 
 * **Success response**
@@ -425,6 +449,18 @@
       }
       ```
 * **Error Response:**
+    * **status :** 400 Bad request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+              ...
+              ...
+            }
+        }
+      ```
     * **status :** 404 Not found<br />
       **json :** 
       ```
@@ -465,6 +501,235 @@
         "status": 201,
         "error": false,
         "messages": "delete nasabah with id {id} is success"
+      }
+      ```
+* **Error Response:**
+    * **status :** 404 Not found<br />
+      **json :** 
+      ```
+        {
+            "status": 404,
+            "error": true,
+            "messages": "..."
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 10 get admin
+* **URL** <br>
+    ```
+    // All admin
+    https://bsblbackend.herokuapp.com/admin/getadmin
+    
+    // Detail admin
+    https://bsblbackend.herokuapp.com/admin/getadmin?id_admin=:id_admin
+    ```
+* **Request method** <br>
+`GET`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only superadmin allowed* |
+
+* **Success response**
+    * **code :** 200 Ok<br />
+      **json :** 
+      ```
+      {
+        "status": 200,
+        "error": false,
+        "data": {
+            ..
+            ..
+            ..
+        }
+      }
+      ```
+* **Error Response:**
+    * **status :** 404 Not found<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 11. add admin
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/admin/addadmin
+    ```
+* **Request method** <br>
+`POST`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only superadmin allowed* |
+* **Params body** <br>
+
+    | PARAMETER  | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | example            |
+    | :--:       |  :--:    |  :--:  |  :--:      |  :--:      |  :--:              |
+    |username    | yes      | yes    | 8 char     | 20 char    |                    |
+    |password    | yes      | -      | 8 char     | 20 char    |                    |
+    |nama_lengkap| yes      | yes    |            | 40 char    |                    |
+    |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |alamat      | yes      | -      |            | 255 char   |                    |
+    |tgl_lahir   | yes      | -      |            | 10 char    |dd-mm-yyyy          |
+    |kelamin     | yes      | -      |            |            |laki-laki/perempuan |
+    |privilege   | yes      | -      |            |            |super/admin         |
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+        "status": 201,
+        "error": false,
+        "messages": "add new admin is success"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+              ...
+              ...
+            }
+        }
+      ```
+    * **status :** 401 Unauthorized<br />
+      **json :** 
+      ```
+        {
+            "status": 401,
+            "error": true,
+            "messages": "access denied/token expired/invalid token"
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 12. edit admin
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/admin/editadmin
+    ```
+* **Request method** <br>
+`PUT`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only superadmin allowed* |
+* **Params body** <br>
+
+    | PARAMETER  | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | example            |
+    | :--:       |  :--:    |  :--:  |  :--:      |  :--:      |  :--:              |
+    |username    | yes      | yes    | 8 char     | 20 char    |                    |
+    |new_password| -        | -      | 8 char     | 20 char    |                    |
+    |nama_lengkap| yes      | yes    |            | 40 char    |                    |
+    |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |alamat      | yes      | -      |            | 255 char   |                    |
+    |tgl_lahir   | yes      | -      |            | -          |dd-mm-yyyy          |
+    |kelamin     | yes      | -      |            | -          |laki-laki/perempuan |
+    |privilege   | yes      | -      |            |            |super/admin         |
+    |active      | yes      | -      |            |            |'1'/'0'             |
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+            "status": 200,
+            "error": false,
+            "messages": "edit admin with id {id} is success"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+              ...
+              ...
+            }
+        }
+      ```
+    * **status :** 401 Unauthorized<br />
+      **json :** 
+      ```
+        {
+            "status": 401,
+            "error": true,
+            "messages": "access denied/token expired/invalid token"
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 13. delete admin
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/admin/deleteadmin?id=:id
+    ```
+* **Request method** <br>
+`DELETE`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only superadmin allowed* |
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+        "status": 201,
+        "error": false,
+        "messages": "delete admin with id {id} is success"
       }
       ```
 * **Error Response:**
