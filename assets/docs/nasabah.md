@@ -297,7 +297,7 @@
 ## 1.6 edit profile
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/nasabah/editproflie
+    https://bsblbackend.herokuapp.com/nasabah/editprofile
     ```
 * **Request method** <br>
 `PUT`
