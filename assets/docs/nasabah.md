@@ -133,10 +133,11 @@
 `POST`
 * **Params body** <br>
 
-    | PARAMETER  | REQUIRED |
-    | :--:       |  :--:    |
-    |email       | yes      |
-    |password    | yes      |
+    | PARAMETER  | REQUIRED | value   |
+    | :--:       |  :--:    |         |
+    |email       | yes      |         |
+    |password    | yes      |         |
+    |rememberme  | -        | '1'/'0' |
 
 * **Success response**
     * **code :** 200 Ok<br />
