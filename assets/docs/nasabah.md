@@ -134,7 +134,7 @@
 * **Params body** <br>
 
     | PARAMETER  | REQUIRED | value   |
-    | :--:       |  :--:    |         |
+    | :--:       |  :--:    | :--:    |
     |email       | yes      |         |
     |password    | yes      |         |
     |rememberme  | -        | '1'/'0' |
