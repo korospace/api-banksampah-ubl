@@ -251,7 +251,7 @@
 ## 5. logout
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/nasabah/logout
+    https://bsblbackend.herokuapp.com/admin/logout
     ```
 * **Request method** <br>
 `DELETE`
