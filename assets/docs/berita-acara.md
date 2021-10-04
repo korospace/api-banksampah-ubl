@@ -26,7 +26,7 @@
 * **Params body** <br>
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
-    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |              |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
     |title        | yes      | yes    |            | 100 char   |              |
     |thumbnail    | yes      | -      |            | 200 kb     | png,jpg,webp |
     |content      | yes      | -      |            | 10.000 char|              |
@@ -129,7 +129,7 @@
 * **Params body** <br>
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
-    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |              |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
     |id           | yes      |        |            |            | number       |
     |title        | yes      | yes    |            | 100 char   |              |
     |thumbnail    | -        | -      |            | 200 kb     | png,jpg,webp |
