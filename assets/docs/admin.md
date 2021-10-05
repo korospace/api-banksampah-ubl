@@ -298,7 +298,7 @@
     https://bsblbackend.herokuapp.com/admin/getnasabah
     
     // Detail nasabah
-    https://bsblbackend.herokuapp.com/admin/getnasabah?id_nasabah=:id_nasabah
+    https://bsblbackend.herokuapp.com/admin/getnasabah?id=:id
     ```
 * **Request method** <br>
 `GET`
@@ -530,7 +530,7 @@
     https://bsblbackend.herokuapp.com/admin/getadmin
     
     // Detail admin
-    https://bsblbackend.herokuapp.com/admin/getadmin?id_admin=:id_admin
+    https://bsblbackend.herokuapp.com/admin/getadmin?id=:id
     ```
 * **Request method** <br>
 `GET`
