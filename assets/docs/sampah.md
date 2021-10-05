@@ -1,4 +1,4 @@
-# KATEGORI SAMPAH ENDPOINT
+# BERITA ACARA ENDPOINT
 <a href="../../README.md"><strong>« back to menu</strong></a>
 
 <details open="open">
@@ -6,14 +6,15 @@
   <ul>
     <li><a href="#1-add-item">add item</a></li>
     <li><a href="#2-get-item">get item</a></li>
-    <li><a href="#3-delete-item">delete item</a></li>
+    <li><a href="#3-edit-item">edit item</a></li>
+    <li><a href="#4-delete-item">delete item</a></li>
   </ul>
 </details>
 
 ## 1. add item
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/kategori_sampah/additem
+    https://bsblbackend.herokuapp.com/sampah/additem
     ```
 * **Request method** <br>
 `POST`
@@ -24,9 +25,11 @@
     |token       | yes      | **only admin allowed*      |
 * **Params body** <br>
 
-    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH |
-    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |
-    |kategori_name| yes      | yes    |            | 40 char    |
+    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
+    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 100 char   |              |
+    |harga        | yes      | -      |            | 11         | number       |
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -35,7 +38,7 @@
       {
         "status": 201,
         "error": false,
-        "messages": "add new kategori is success"
+        "messages": "add new sampah is success"
       }
       ```
 * **Error Response:**
@@ -65,7 +68,11 @@
 ## 2. get item
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/kategori_sampah/getitem
+    // All sampah
+    https://bsblbackend.herokuapp.com/sampah/getitem
+    
+    // filter by kategori
+    https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:id_kategori
     ```
 * **Request method** <br>
 `GET`
@@ -103,10 +110,65 @@
         }
       ```
 
-## 3 delete item
+## 3. edit item
 * **URL** <br>
     ```
-    https://bsblbackend.herokuapp.com/kategori_sampah/deleteitem?id=:id
+    https://bsblbackend.herokuapp.com/sampah/edititem
+    ```
+* **Request method** <br>
+`PUT`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | info                       | 
+    | :--:       |  :--:    |  :--:                      | 
+    |token       | yes      | **only admin allowed*      |
+* **Params body** <br>
+
+    | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
+    | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
+    |id           | yes      |        |            |            | number       |
+    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 100 char   |              |
+    |harga        | yes      | -      |            | 11         | number       |
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+        "status": 201,
+        "error": false,
+        "messages": "edit sampah is success"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad Request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+                ..
+                ..
+                ..
+            }
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 4 delete item
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/kategori_berita/deleteitem?id=:id
     ```
 * **Request method** <br>
 `DELETE`
@@ -123,7 +185,7 @@
       {
             "status": 201,
             "error": false,
-            "messages": "delete kategori with id {id} is success",
+            "messages": "delete berita with id {id} is success",
       }
       ```
 * **Error Response:**

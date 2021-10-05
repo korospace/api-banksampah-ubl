@@ -30,7 +30,7 @@
     |title        | yes      | yes    |            | 100 char   |              |
     |thumbnail    | yes      | -      |            | 200 kb     | png,jpg,webp |
     |content      | yes      | -      |            | 10.000 char|              |
-    |kategori     | yes      | -      |            | 20 char    | **only in database are allowed*|
+    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
 
 * **Success response**
     * **code :** 201 Created<br />
@@ -134,7 +134,7 @@
     |title        | yes      | yes    |            | 100 char   |              |
     |thumbnail    | -        | -      |            | 200 kb     | png,jpg,webp |
     |content      | yes      | -      |            | 10.000 char|              |
-    |kategori     | yes      | -      |            | 20 char    | **only in database are allowed*|
+    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
 
 * **Success response**
     * **code :** 201 Created<br />
