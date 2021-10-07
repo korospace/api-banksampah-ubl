@@ -9,8 +9,9 @@
     <li><a href="#13-login">login</a></li>
     <li><a href="#14-session-check">session check</a></li>
     <li><a href="#15-get-profile">get profile</a></li>
-    <li><a href="#16-edit-profile">edit profile</a></li>
-    <li><a href="#17-logout">logout</a></li>
+    <li><a href="#16-get-saldo">get saldo</a></li>
+    <li><a href="#17-edit-profile">edit profile</a></li>
+    <li><a href="#18-logout">logout</a></li>
   </ul>
 </details>
 
@@ -295,7 +296,62 @@
         }
       ```
 
-## 1.6 edit profile
+## 1.6 get saldo
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/nasabah/getsaldo
+    ```
+* **Request method** <br>
+`GET`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED | 
+    | :--:       |  :--:    | 
+    |token       | yes      |
+
+* **Success response**
+    * **code :** 200 Ok<br />
+      **json :** 
+      ```
+      {
+            "status": 200,
+            "error": false,
+            "data": {
+                "saldo_uang": "..",
+                "saldo_emas": "..",
+            }
+      }
+      ```
+* **Error Response:**
+    * **status :** 401 Unauthorized<br />
+      **json :** 
+      ```
+        {
+            "status": 401,
+            "error": true,
+            "messages": "access denied/token expired/invalid token"
+        }
+      ```
+    * **status :** 404 Not found<br />
+      **json :** 
+      ```
+        {
+            "status": 404,
+            "error": true,
+            "messages": "profile nasabah with id $id notfound"
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 1.7 edit profile
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/editprofile
@@ -352,7 +408,7 @@
         }
       ```
 
-## 1.7 logout
+## 1.8 logout
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/logout
