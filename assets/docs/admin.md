@@ -9,14 +9,15 @@
     <li><a href="#3-get-profile">get profile</a></li>
     <li><a href="#4-edit-profile">edit profile</a></li>
     <li><a href="#5-logout">logout</a></li>
-    <li><a href="#6-get-nasabah">get nasabah</a></li>
-    <li><a href="#7-add-nasabah">add nasabah</a></li>
-    <li><a href="#8-edit-nasabah">edit nasabah</a></li>
-    <li><a href="#9-delete-nasabah">delete nasabah</a></li>
-    <li><a href="#10-get-admin">get admin</a></li>
-    <li><a href="#11-add-admin">add admin</a></li>
-    <li><a href="#12-edit-admin">edit admin</a></li>
-    <li><a href="#13-delete-admin">delete admin</a></li>
+    <li><a href="#6-total-saldo">total saldo</a></li>
+    <li><a href="#7-get-nasabah">get nasabah</a></li>
+    <li><a href="#8-add-nasabah">add nasabah</a></li>
+    <li><a href="#9-edit-nasabah">edit nasabah</a></li>
+    <li><a href="#10-delete-nasabah">delete nasabah</a></li>
+    <li><a href="#11-get-admin">get admin</a></li>
+    <li><a href="#12-add-admin">add admin</a></li>
+    <li><a href="#13-edit-admin">edit admin</a></li>
+    <li><a href="#14-delete-admin">delete admin</a></li>
   </ul>
 </details>
 
@@ -291,7 +292,53 @@
         }
       ```
 
-## 6 get nasabah
+## 6. total saldo
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/admin/totalsaldo
+    ```
+* **Request method** <br>
+`GET`
+* **Params header** <br>
+
+    | PARAMETER  | REQUIRED |
+    | :--:       |  :--:    |
+    |token       | yes      |
+
+* **Success response**
+    * **code :** 200 Ok<br />
+      **json :** 
+      ```
+      {
+            "status": 200,
+            "error": false,
+            "data ": {
+              "saldo_uang": "..",
+              "saldo_emas": "..",
+            }
+      }
+      ```
+* **Error Response:**
+    * **status :** 401 Unauthorized<br />
+      **json :** 
+      ```
+        {
+            "status": 401,
+            "error": true,
+            "messages": "access denied/token expired/invalid token"
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 7. get nasabah
 * **URL** <br>
     ```
     // All nasabah
@@ -342,7 +389,7 @@
         }
       ```
 
-## 7. add nasabah
+## 8. add nasabah
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/addnasabah
@@ -411,7 +458,7 @@
         }
       ```
 
-## 8. edit nasabah
+## 9. edit nasabah
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/editnasabah
@@ -480,7 +527,7 @@
         }
       ```
 
-## 9. delete nasabah
+## 10. delete nasabah
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/deletenasabah?id=:id
@@ -523,7 +570,7 @@
         }
       ```
 
-## 10 get admin
+## 11 get admin
 * **URL** <br>
     ```
     // All admin
@@ -574,7 +621,7 @@
         }
       ```
 
-## 11. add admin
+## 12. add admin
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/addadmin
@@ -641,7 +688,7 @@
         }
       ```
 
-## 12. edit admin
+## 13. edit admin
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/editadmin
@@ -709,7 +756,7 @@
         }
       ```
 
-## 13. delete admin
+## 14. delete admin
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/admin/deleteadmin?id=:id
