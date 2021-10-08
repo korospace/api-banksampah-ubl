@@ -34,6 +34,7 @@
     |alamat      | yes      | -      |            | 255 char   |                    |
     |rt          | yes      | -      | 2 char     | 2 char     |01                  |
     |rw          | yes      | -      | 2 char     | 2 char     |02                  |
+    |kodepos     | yes      | -      | -          | -          |15414               |
     |tgl_lahir   | yes      | -      |            | 10 char    |03-10-2000          |
     |kelamin     | yes      | -      |            | 9 char     |laki-laki/perempuan |
 
