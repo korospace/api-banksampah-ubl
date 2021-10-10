@@ -6,8 +6,9 @@
   <ul>
     <li><a href="#1-add-item">add item</a></li>
     <li><a href="#2-get-item">get item</a></li>
-    <li><a href="#3-edit-item">edit item</a></li>
-    <li><a href="#4-delete-item">delete item</a></li>
+    <li><a href="#3-get-item">total item</a></li>
+    <li><a href="#4-edit-item">edit item</a></li>
+    <li><a href="#5-delete-item">delete item</a></li>
   </ul>
 </details>
 
@@ -73,6 +74,9 @@
     
     // filter by kategori
     https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:id_kategori
+
+    // total sampah
+    https://bsblbackend.herokuapp.com/sampah/totalitem
     ```
 * **Request method** <br>
 `GET`
