@@ -4,18 +4,19 @@
 <details open="open">
   <summary>Table of Contents</summary>
   <ul>
-    <li><a href="#11-register">register</a></li>
-    <li><a href="#12-verification">verification</a></li>
-    <li><a href="#13-login">login</a></li>
-    <li><a href="#14-session-check">session check</a></li>
-    <li><a href="#15-get-profile">get profile</a></li>
-    <li><a href="#16-get-saldo">get saldo</a></li>
-    <li><a href="#17-edit-profile">edit profile</a></li>
-    <li><a href="#18-logout">logout</a></li>
+    <li><a href="#1-register">register</a></li>
+    <li><a href="#2-verification">verification</a></li>
+    <li><a href="#3-login">login</a></li>
+    <li><a href="#4-session-check">session check</a></li>
+    <li><a href="#5-get-profile">get profile</a></li>
+    <li><a href="#6-get-saldo">get saldo</a></li>
+    <li><a href="#7-edit-profile">edit profile</a></li>
+    <li><a href="#8-logout">logout</a></li>
+    <li><a href="#9-kritik-dan-saran">kritik dan saran</a></li>
   </ul>
 </details>
 
-## 1.1 register
+## 1 register
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/register
@@ -74,7 +75,7 @@
         }
       ```
 
-## 1.2 verification
+## 2 verification
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/verification
@@ -126,7 +127,7 @@
         }
       ```
 
-## 1.3 login
+## 3 login
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/login
@@ -193,7 +194,7 @@
         }
       ```
 
-## 1.4 session check
+## 4 session check
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/sessioncheck
@@ -240,7 +241,7 @@
         }
       ```
 
-## 1.5 get profile
+## 5 get profile
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/getprofile
@@ -297,7 +298,7 @@
         }
       ```
 
-## 1.6 get saldo
+## 6 get saldo
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/getsaldo
@@ -352,7 +353,7 @@
         }
       ```
 
-## 1.7 edit profile
+## 7 edit profile
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/editprofile
@@ -409,7 +410,7 @@
         }
       ```
 
-## 1.8 logout
+## 8 logout
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/logout
@@ -457,6 +458,54 @@
         {
             "status": 500,
             "error": "1",
+            "messages": "...."
+        }
+      ```
+
+## 9 kritik dan saran
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/nasabah/sendkritik
+    ```
+* **Request method** <br>
+`POST`
+* **Params body** <br>
+
+    | PARAMETER | REQUIRED |MIN_LENGTH | MAX_LENGTH |
+    | :--:      |  :--:    |:--:       |  :--:      |
+    |name       | yes      |           | 20 char    |
+    |email      | yes      |           | 40 char    |
+    |message    | yes      |           | -          |
+
+* **Success response**
+    * **code :** 201 Created<br />
+      **json :** 
+      ```
+      {
+        "status": 201,
+        "error": false,
+        "messages": "kritik dan saran successfully sent"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad Request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": {
+                ..
+                ..
+            }
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
             "messages": "...."
         }
       ```
