@@ -411,6 +411,7 @@
     |nama_lengkap| yes      | yes    |            | 40 char    |                    |
     |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
     |alamat      | yes      | -      |            | 255 char   |                    |
+    |kodepos     | yes      | -      | -          | -          |15414               |
     |rt          | yes      | -      | 2 char     | 2 char     |01                  |
     |rw          | yes      | -      | 2 char     | 2 char     |02                  |
     |tgl_lahir   | yes      | -      |            | 10 char    |dd-mm-yyyy          |
