@@ -31,11 +31,11 @@
     |username    | yes      | yes    | 8 char     | 20 char    |                    |
     |password    | yes      | -      | 8 char     | 20 char    |                    |
     |nama_lengkap| yes      | yes    |            | 40 char    |                    |
-    |notelp      | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |notelp      | yes      | yes    |            | 14 char    | **only number*     |
     |alamat      | yes      | -      |            | 255 char   |                    |
-    |kodepos     | yes      | -      | -          | -          |15414               |
-    |rt          | yes      | -      | 2 char     | 2 char     |01                  |
-    |rw          | yes      | -      | 2 char     | 2 char     |02                  |
+    |kodepos     | yes      | -      | -          | -          | **only number* |
+    |rt          | yes      | -      | 2 char     | 2 char     | **only number* |
+    |rw          | yes      | -      | 2 char     | 2 char     | **only number* |
     |tgl_lahir   | yes      | -      |            | 10 char    |03-10-2000          |
     |kelamin     | yes      | -      |            | 9 char     |laki-laki/perempuan |
 
@@ -366,7 +366,7 @@
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:              |
     |username     | yes      | yes    | 8 char     | 20 char    |                    |
     |nama_lengkap | yes      | yes    |            | 40 char    |                    |
-    |notelp       | yes      | yes    |            | 14 char    |0856xxxxxxxxxx      |
+    |notelp       | yes      | yes    |            | 14 char    |**only number*      |
     |alamat       | yes      | -      |            | 255 char   |                    |
     |tgl_lahir    | yes      | -      |            | 10 char    |03-10-2000          |
     |kelamin      | yes      | -      |            | 9 char     |laki-laki/perempuan |
