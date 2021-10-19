@@ -177,6 +177,7 @@
     |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
     |jenis        | yes      | yes    |            | 100 char   |              |
     |harga        | yes      | -      |            | 11         | number       |
+    |jumlah       | yes      | -      |            | 11         | number       |
 
 * **Success response**
     * **code :** 201 Created<br />

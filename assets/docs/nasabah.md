@@ -33,7 +33,7 @@
     |nama_lengkap| yes      | yes    |            | 40 char    |                    |
     |notelp      | yes      | yes    |            | 14 char    | **only number*     |
     |alamat      | yes      | -      |            | 255 char   |                    |
-    |kodepos     | yes      | -      | -          | -          | **only number* |
+    |kodepos     | yes      | -      | 5 char     | 5 char     | **only number* |
     |rt          | yes      | -      | 2 char     | 2 char     | **only number* |
     |rw          | yes      | -      | 2 char     | 2 char     | **only number* |
     |tgl_lahir   | yes      | -      |            | 10 char    |03-10-2000          |
