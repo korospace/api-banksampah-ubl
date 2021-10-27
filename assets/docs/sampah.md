@@ -114,6 +114,7 @@
 ## 3. total item
 * **URL** <br>
     ```
+    / All data
     https://bsblbackend.herokuapp.com/sampah/totalitem
     
     // filter by nasaba id
