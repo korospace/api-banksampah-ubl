@@ -18,6 +18,7 @@
     https://bsblbackend.herokuapp.com/transaksi/getdata?id_transaksi=:id_transaksi
     
     // Filter By id nasabah
+    // *only admin
     https://bsblbackend.herokuapp.com/transaksi/getdata?idnasabah=:idnasabah
     ```
 * **Request method** <br>
