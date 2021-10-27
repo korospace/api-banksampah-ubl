@@ -28,3 +28,4 @@
   |berita acara   | <ul><li>- additem</li><li>- getitem</li><li>- edititem</li><li>- deleteitem</li></ul> | <a href="/assets/docs/berita-acara.md">detail</a>
   |kategori sampah| <ul><li>- additem</li><li>- getitem</li><li>- deleteitem</li></ul> | <a href="/assets/docs/kategori-sampah.md">detail</a>
   |sampah   | <ul><li>- additem</li><li>- getitem</li><li>- totalitem</li><li>- edititem</li><li>- deleteitem</li></ul> | <a href="/assets/docs/sampah.md">detail</a>
+  |transaksi| <ul><li>- getdata</li></ul> | <a href="/assets/docs/transaksi.md">detail</a>
