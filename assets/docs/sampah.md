@@ -73,7 +73,7 @@
     https://bsblbackend.herokuapp.com/sampah/getitem
     
     // filter by kategori
-    https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:id_kategori
+    https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:kategori
     ```
 * **Request method** <br>
 `GET`
@@ -115,6 +115,10 @@
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/sampah/totalitem
+    
+    // filter by nasaba id
+    //   *only admin allowed
+    https://bsblbackend.herokuapp.com/sampah/totalitem?idnasabah=:idnasabah
     ```
 * **Request method** <br>
 `GET`
