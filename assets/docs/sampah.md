@@ -28,8 +28,8 @@
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
-    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
-    |jenis        | yes      | yes    |            | 100 char   |              |
+    |kategori     | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 40 char    |              |
     |harga        | yes      | -      |            | 11         | number       |
 
 * **Success response**
@@ -173,9 +173,9 @@
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
-    |id           | yes      |        |            |            | number       |
-    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
-    |jenis        | yes      | yes    |            | 100 char   |              |
+    |id           | yes      |        |            |            |              |
+    |kategori     | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 40 char    |              |
     |harga        | yes      | -      |            | 11         | number       |
     |jumlah       | yes      | -      |            | 11         | number       |
 
