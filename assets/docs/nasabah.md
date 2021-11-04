@@ -12,7 +12,8 @@
     <li><a href="#6-get-saldo">get saldo</a></li>
     <li><a href="#7-edit-profile">edit profile</a></li>
     <li><a href="#8-logout">logout</a></li>
-    <li><a href="#9-kritik-dan-saran">kritik dan saran</a></li>
+    <li><a href="#9-forgot-password">forgot password</a></li>
+    <li><a href="#10-kritik-dan-saran">send kritik</a></li>
   </ul>
 </details>
 
@@ -462,7 +463,50 @@
         }
       ```
 
-## 9 kritik dan saran
+## 9 forgot password
+* **URL** <br>
+    ```
+    https://bsblbackend.herokuapp.com/nasabah/forgotpass
+    ```
+* **Request method** <br>
+`POST`
+* **Params body** <br>
+
+    | PARAMETER | REQUIRED |
+    | :--:      |  :--:    |
+    |email      | yes      |
+
+* **Success response**
+    * **code :** 200 Ok<br />
+      **json :** 
+      ```
+      {
+        "status": 200,
+        "error": false,
+        "messages": "password telah terkirim"
+      }
+      ```
+* **Error Response:**
+    * **status :** 400 Bad Request<br />
+      **json :** 
+      ```
+        {
+            "status": 400,
+            "error": true,
+            "messages": "email tidak terdaftar"
+        }
+      ```
+    * **status :** 500 Internal Server Error<br />
+      **json :** 
+      ```
+        {
+            "status": 500,
+            "error": true,
+            "messages": "...."
+        }
+      ```
+
+## 10 kritik dan saran
 * **URL** <br>
     ```
     https://bsblbackend.herokuapp.com/nasabah/sendkritik

@@ -28,8 +28,8 @@
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
-    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
-    |jenis        | yes      | yes    |            | 100 char   |              |
+    |kategori     | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 40 char    |              |
     |harga        | yes      | -      |            | 11         | number       |
 
 * **Success response**
@@ -73,7 +73,7 @@
     https://bsblbackend.herokuapp.com/sampah/getitem
     
     // filter by kategori
-    https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:id_kategori
+    https://bsblbackend.herokuapp.com/sampah/getitem?kategori=:kategori
     ```
 * **Request method** <br>
 `GET`
@@ -114,7 +114,12 @@
 ## 3. total item
 * **URL** <br>
     ```
+    // All data
     https://bsblbackend.herokuapp.com/sampah/totalitem
+    
+    // filter by nasaba id
+    //   *only admin allowed
+    https://bsblbackend.herokuapp.com/sampah/totalitem?idnasabah=:idnasabah
     ```
 * **Request method** <br>
 `GET`
@@ -173,9 +178,9 @@
 
     | PARAMETER   | REQUIRED | UNIQUE | MIN_LENGTH | MAX_LENGTH | INFO         |
     | :--:        |  :--:    |  :--:  |  :--:      |  :--:      |  :--:        |
-    |id           | yes      |        |            |            | number       |
-    |id_kategori  | yes      | -      |            | -          | **only in database are allowed*|
-    |jenis        | yes      | yes    |            | 100 char   |              |
+    |id           | yes      |        |            |            |              |
+    |kategori     | yes      | -      |            | -          | **only in database are allowed*|
+    |jenis        | yes      | yes    |            | 40 char    |              |
     |harga        | yes      | -      |            | 11         | number       |
     |jumlah       | yes      | -      |            | 11         | number       |
 
