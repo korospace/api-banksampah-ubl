@@ -73,10 +73,10 @@
     https://bsblbackend.herokuapp.com/berita_acara/getitem
     
     // filter by kategori
-    https://bsblbackend.herokuapp.com/berita_acara/getitem?kategori=:id_kategori
+    https://bsblbackend.herokuapp.com/berita_acara/getitem?kategori=:kategori
     
     // get detail berita by id
-    https://bsblbackend.herokuapp.com/berita_acara/getitem?id_berita=:id
+    https://bsblbackend.herokuapp.com/berita_acara/getitem?id=:id
     ```
 * **Request method** <br>
 `GET`
