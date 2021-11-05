@@ -77,6 +77,9 @@
     
     // get detail berita by id
     https://bsblbackend.herokuapp.com/berita_acara/getitem?id=:id
+
+    // get other berita
+    https://bsblbackend.herokuapp.com/berita_acara/otheritem?id=:id
     ```
 * **Request method** <br>
 `GET`
