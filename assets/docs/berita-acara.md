@@ -79,7 +79,7 @@
     https://bsblbackend.herokuapp.com/berita_acara/getitem?id=:id
 
     // get other berita
-    https://bsblbackend.herokuapp.com/berita_acara/otheritem?id=:id
+    https://bsblbackend.herokuapp.com/berita_acara/otheritem?id=:current_id
     ```
 * **Request method** <br>
 `GET`
